@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.tasks-container {
+  background-color: white;
+  width: 400px;
+  padding: 15px 0;
+}

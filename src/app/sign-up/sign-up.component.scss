@@ -1,0 +1,22 @@
+.sign-up-section {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  min-width: 300px;
+  width: 400px;
+  padding: 50px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-size: 28px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+}

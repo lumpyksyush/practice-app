@@ -1,0 +1,33 @@
+<div class="sign-in-section">
+  <h3>Sign In Form</h3>
+  <form
+    class="sign-in-section__form"
+    [formGroup]="signInFormGroup"
+    (ngSubmit)="onSubmit()"
+  >
+    <mat-form-field>
+      <mat-label>Email:</mat-label>
+      <input matInput type="text" formControlName="email" required />
+      <mat-error *ngIf="this.signInFormGroup.controls.email.invalid">{{
+        displayErrorMessage()
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password:</mat-label>
+      <input
+        matInput
+        type="password"
+        autocomplete="off"
+        formControlName="password"
+        required
+      />
+    </mat-form-field>
+    <button
+      mat-stroked-button
+      type="submit"
+      [disabled]="!signInFormGroup.valid"
+    >
+      Sign In
+    </button>
+  </form>
+</div>
