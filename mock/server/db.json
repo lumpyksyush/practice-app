@@ -1,0 +1,28 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "name": "Meet Alice at 3.00 PM"
+    },
+    {
+      "id": 2,
+      "name": "Do all the household chores"
+    },
+    {
+      "id": 3,
+      "name": "Cook some diet pancakes"
+    },
+    {
+      "id": 4,
+      "name": "Finish reading Angular documentation"
+    },
+    {
+      "id": 5,
+      "name": "Read JJBA manga"
+    },
+    {
+      "id": 6,
+      "name": "Play Hades"
+    }
+  ]
+}
