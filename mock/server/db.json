@@ -24,5 +24,37 @@
       "id": 6,
       "name": "Play Hades"
     }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "hello@gmail.com",
+      "password": "hello"
+    },
+    {
+      "id": 2,
+      "email": "boris@gmail.com",
+      "password": "pass"
+    },
+    {
+      "id": 3,
+      "email": "mary@gmail.com",
+      "password": "111"
+    },
+    {
+      "email": "john@mail.ru",
+      "password": "$2a$10$SmOUMri67h2QurjGfAjY6uJVLa70LV5l12wcl2rsBwDHvGMMuOa5u",
+      "id": 4
+    },
+    {
+      "email": "kyle111@gmail.com",
+      "password": "$2a$10$TxC3DSzxkgeLb/9HV653YONHHsjxZ.3sPz9KCAUZeXHvJvsLXNfeC",
+      "id": 5
+    },
+    {
+      "email": "kartman@yandex.ru",
+      "password": "$2a$10$I0gPjuBqvUVRDzWq1BBSSOfVFUebbqiTYI.X3YuwWkVEPrpdMbeuK",
+      "id": 6
+    }
   ]
 }

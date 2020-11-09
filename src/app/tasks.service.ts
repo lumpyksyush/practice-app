@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 import { Task } from './tasks/task.model';
 
@@ -10,7 +10,9 @@ import { Task } from './tasks/task.model';
   providedIn: 'root',
 })
 export class TasksService {
-  private tasksUrl = 'http://localhost:3000/tasks';
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   constructor(private http: HttpClient) {}
 
@@ -27,4 +29,6 @@ export class TasksService {
       return of(result as T);
     };
   }
+
+  private tasksUrl = 'http://localhost:3000/tasks';
 }

@@ -21,21 +21,22 @@ import { TasksComponent } from './tasks/tasks.component';
 import { TasksListComponent } from './tasks/tasks-list/tasks-list.component';
 import { HeaderComponent } from './tasks/header/header.component';
 
+import { AccessTasksGuard } from './access-tasks.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
     SignUpComponent,
     SignInComponent,
+    HeaderComponent,
     TasksComponent,
     TasksListComponent,
-    HeaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -43,8 +44,9 @@ import { HeaderComponent } from './tasks/header/header.component';
     MatDividerModule,
     MatToolbarModule,
     MatIconModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [AccessTasksGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

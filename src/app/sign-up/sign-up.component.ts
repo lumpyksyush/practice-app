@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
+import { RegisterService } from '../register.service';
+
+import { User } from '../user.model';
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -17,13 +21,17 @@ export class SignUpComponent implements OnInit {
     confirmPassword: new FormControl('', Validators.required),
   });
 
-  constructor() {}
+  constructor(
+    private registerService: RegisterService
+  ) {}
 
   ngOnInit(): void {}
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.signUpFormGroup.value);
+    this.registerService.signUp(
+      this.signUpFormGroup.controls.email.value,
+      this.signUpFormGroup.controls.password.value
+    );
   }
 
   displayErrorMessage() {
