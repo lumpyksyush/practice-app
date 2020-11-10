@@ -25,9 +25,7 @@ export class AuthService {
     return this.http
       .post<any>(`${this.baseUrl}/login`, { email, password }, this.httpOptions)
       .pipe(
-        tap((data) => console.log('data', data)),
         map((res) => {
-          console.log(1);
           let user = new User();
 
           if (res && res.accessToken) {
@@ -38,9 +36,9 @@ export class AuthService {
             user.email = decodedToken.email;
 
             sessionStorage.setItem('currentUser', JSON.stringify(user));
-            this.router.navigate(['tasks']);
           }
 
+          console.log(`${user.email} has successfully signed in`);
           return user;
         }),
         catchError(this.handleError<User>('sign in'))

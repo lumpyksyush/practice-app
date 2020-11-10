@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { RegisterService } from '../register.service';
 
@@ -20,16 +21,21 @@ export class SignUpComponent implements OnInit {
   });
 
   constructor(
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   onSubmit() {
-    this.registerService.signUp(
-      this.signUpFormGroup.controls.email.value,
-      this.signUpFormGroup.controls.password.value
-    );
+    this.registerService
+      .signUp(
+        this.signUpFormGroup.controls.email.value,
+        this.signUpFormGroup.controls.password.value
+      )
+      .subscribe((_) => {
+        this.router.navigate(['tasks']);
+      });
   }
 
   displayErrorMessage() {

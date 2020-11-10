@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -15,7 +14,7 @@ export class RegisterService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   signUp(email, password): Observable<User> {
     return this.http
@@ -28,7 +27,6 @@ export class RegisterService {
         tap((_) => {
           console.log(`new user with email ${email} has been registered`);
           sessionStorage.setItem('currentUser', `${email}`);
-          this.router.navigate(['tasks']);
         }),
         catchError(this.handleError<User>('register a new user'))
       );

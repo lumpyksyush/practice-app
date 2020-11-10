@@ -55,6 +55,11 @@
       "email": "kartman@yandex.ru",
       "password": "$2a$10$I0gPjuBqvUVRDzWq1BBSSOfVFUebbqiTYI.X3YuwWkVEPrpdMbeuK",
       "id": 6
+    },
+    {
+      "email": "myEmail@mail.ru",
+      "password": "$2a$10$Gn2cCIG5QwkTLPZpFrUUg.tRXPaNEqhvjZNzMfZmRzuXWdjnx9ABe",
+      "id": 7
     }
   ]
 }
