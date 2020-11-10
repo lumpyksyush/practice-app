@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
+import { AuthService } from '../auth.service';
+
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
@@ -15,13 +17,16 @@ export class SignInComponent implements OnInit {
     ),
     password: new FormControl('', Validators.required),
   });
-  constructor() {}
+
+  constructor(private auth: AuthService) {}
 
   ngOnInit(): void {}
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.signInFormGroup.value);
+    this.auth.signIn(
+      this.signInFormGroup.controls.email.value,
+      this.signInFormGroup.controls.password.value
+    );
   }
 
   displayErrorMessage() {

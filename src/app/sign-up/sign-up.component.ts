@@ -4,8 +4,6 @@ import { Validators } from '@angular/forms';
 
 import { RegisterService } from '../register.service';
 
-import { User } from '../user.model';
-
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
