@@ -1,17 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {  ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
 
-describe('HeaderComponent', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
+import { AuthService } from '../../auth.service';
 
-  beforeEach(async(() => {
+let component: HeaderComponent;
+let fixture: ComponentFixture<HeaderComponent>;
+
+describe('HeaderComponent', () => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ HeaderComponent ]
-    })
-    .compileComponents();
-  }));
+      declarations: [HeaderComponent],
+      providers: [AuthService],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
@@ -21,5 +23,11 @@ describe('HeaderComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display the header text correctly', () => {
+    const titleElement: HTMLElement = fixture.debugElement.nativeElement;
+    const title = titleElement.querySelector('h1');
+    expect(title.textContent).toContain('Tasks List');
   });
 });

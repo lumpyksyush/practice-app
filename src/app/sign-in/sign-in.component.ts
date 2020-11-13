@@ -23,7 +23,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit() {
+  onSubmit(): void {
     this.auth
       .signIn(
         this.signInFormGroup.controls.email.value,
@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit {
       .subscribe((_) => this.router.navigate(['tasks']));
   }
 
-  displayErrorMessage() {
+  displayErrorMessage(): string {
     return this.signInFormGroup.controls.email.hasError('email')
       ? 'This is not a valid email'
       : '';

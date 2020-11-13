@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+
 import { Router } from '@angular/router';
+
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { customPassValidator } from '../shared/compare-passwords.validator';
 
 import { RegisterService } from '../register.service';
 
@@ -16,8 +18,13 @@ export class SignUpComponent implements OnInit {
       '',
       Validators.compose([Validators.email, Validators.required])
     ),
-    password: new FormControl('', Validators.required),
-    confirmPassword: new FormControl('', Validators.required),
+    passGroup: new FormGroup(
+      {
+        password: new FormControl('', Validators.required),
+        confirmPassword: new FormControl('', Validators.required),
+      },
+      customPassValidator
+    ),
   });
 
   constructor(
@@ -38,9 +45,12 @@ export class SignUpComponent implements OnInit {
       });
   }
 
-  displayErrorMessage() {
-    return this.signUpFormGroup.controls.email.hasError('email')
-      ? 'This is not a valid email'
-      : '';
+  displayErrorMessage(field: string) {
+    if (field === 'email') {
+      return this.signUpFormGroup.controls.email.hasError('email')
+        ? 'This is not a valid email'
+        : '';
+    }
+    return `'Password' and 'Confirm password' fields should be the same`;
   }
 }

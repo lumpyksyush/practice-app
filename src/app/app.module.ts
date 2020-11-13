@@ -35,6 +35,7 @@ import { AccessTasksGuard } from './access-tasks.guard';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
@@ -44,7 +45,6 @@ import { AccessTasksGuard } from './access-tasks.guard';
     MatDividerModule,
     MatToolbarModule,
     MatIconModule,
-    HttpClientModule,
   ],
   providers: [AccessTasksGuard],
   bootstrap: [AppComponent],

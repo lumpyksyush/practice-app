@@ -1,5 +1,6 @@
 <div class="sign-up-section">
   <h3>Sign Up</h3>
+
   <form
     class="sign-up-section__form"
     [formGroup]="signUpFormGroup"
@@ -9,29 +10,41 @@
       <mat-label>Email:</mat-label>
       <input matInput type="text" formControlName="email" required />
       <mat-error *ngIf="this.signUpFormGroup.controls.email.invalid">{{
-        displayErrorMessage()
+        displayErrorMessage("email")
       }}</mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Password:</mat-label>
-      <input
-        matInput
-        type="password"
-        autocomplete="off"
-        formControlName="password"
-        required
-      />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Confirm password:</mat-label>
-      <input
-        matInput
-        type="password"
-        autocomplete="off"
-        formControlName="confirmPassword"
-        required
-      />
-    </mat-form-field>
+
+    <div formGroupName="passGroup">
+      <p>
+        <mat-form-field>
+          <mat-label>Password:</mat-label>
+          <input
+            matInput
+            type="password"
+            autocomplete="off"
+            formControlName="password"
+            required
+          />
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <mat-label>Confirm password:</mat-label>
+          <input
+            matInput
+            type="password"
+            autocomplete="off"
+            formControlName="confirmPassword"
+            required
+          />
+        </mat-form-field>
+      </p>
+      <mat-error *ngIf="this.signUpFormGroup.controls.passGroup.invalid">{{
+        displayErrorMessage("pass")
+      }}</mat-error>
+    </div>
+
     <button
       mat-stroked-button
       type="submit"
