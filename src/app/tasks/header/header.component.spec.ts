@@ -1,23 +1,35 @@
-import {  ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
 
 import { AuthService } from '../../auth.service';
 
-let component: HeaderComponent;
-let fixture: ComponentFixture<HeaderComponent>;
+const authServiceMock = {
+  signOut: () => {},
+};
 
 describe('HeaderComponent', () => {
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
+  let authService: AuthService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [HeaderComponent],
-      providers: [AuthService],
+      providers: [{ provide: AuthService, useValue: authServiceMock }],
     }).compileComponents();
   });
 
   beforeEach(() => {
+    authService = TestBed.inject(AuthService);
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
     fixture.detectChanges();
   });
 
@@ -26,8 +38,14 @@ describe('HeaderComponent', () => {
   });
 
   it('should display the header text correctly', () => {
-    const titleElement: HTMLElement = fixture.debugElement.nativeElement;
-    const title = titleElement.querySelector('h1');
-    expect(title.textContent).toContain('Tasks List');
+    const titleEl: HTMLElement = fixture.debugElement.nativeElement.querySelector(
+      'h1'
+    );
+    expect(titleEl.textContent).toContain('Tasks List');
   });
+
+  it('clicking sign-out button should trigger onSignOut() method', fakeAsync(() => {
+    const signOutSpy = spyOn(component, 'onSignOut');
+    signOutSpy();
+  }));
 });

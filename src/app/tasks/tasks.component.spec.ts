@@ -1,10 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HttpClientModule } from '@angular/common/http';
-
 import { TasksComponent } from './tasks.component';
-import { TasksListComponent } from './tasks-list/tasks-list.component';
-import { HeaderComponent } from './header/header.component';
 
 describe('TasksComponent', () => {
   let component: TasksComponent;
@@ -12,8 +8,7 @@ describe('TasksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-      declarations: [TasksComponent, TasksListComponent, HeaderComponent],
+      declarations: [TasksComponent],
     }).compileComponents();
   }));
 

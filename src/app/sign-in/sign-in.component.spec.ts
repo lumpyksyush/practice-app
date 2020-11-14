@@ -4,17 +4,18 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
+import { Observable, of, Subject } from 'rxjs';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { SignInComponent } from './sign-in.component';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AuthService } from '../auth.service';
-import { Observable, of, Subject } from 'rxjs';
-import { Router } from '@angular/router';
+import { SignInComponent } from './sign-in.component';
+
 import { User } from '../user.model';
+
+import { AuthService } from '../auth.service';
 
 const authServiceMock = {
   signIn: () => {},

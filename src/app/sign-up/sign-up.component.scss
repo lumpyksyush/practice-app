@@ -22,5 +22,11 @@
   &__form {
     display: flex;
     flex-direction: column;
+    text-align: left;
+
+    .custom-err {
+      font-size: 75%;
+      margin-top: -15px;
+    }
   }
 }

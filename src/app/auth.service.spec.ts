@@ -1,24 +1,29 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
 
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+
 import { AuthService } from './auth.service';
 
-let service: AuthService;
-let httpMock: HttpTestingController;
-
 describe('AuthService', () => {
+  let service: AuthService;
+  let httpMock: HttpTestingController;
+  let router: Router;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule],
       providers: [AuthService],
     });
 
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
+    router = TestBed.inject(Router);
   });
 
   afterEach(() => {
@@ -38,6 +43,19 @@ describe('AuthService', () => {
     const req = httpMock.expectOne('http://localhost:3000/login');
 
     expect(req.request.method).toBe('POST');
-    req.flush(existingUser);
   });
+
+  it('signOut() should trigger sessionStorage cleanup', fakeAsync(() => {
+    spyOn(service, 'signOut').and.callThrough();
+    tick();
+    expect(sessionStorage.length).toBe(0);
+  }));
+
+  it('signOut() should trigger navigation to sign-in page', fakeAsync(() => {
+    const navigateSpy = spyOn(router, 'navigate');
+    spyOn(service, 'signOut').and.callThrough();
+    service.signOut();
+    tick();
+    expect(navigateSpy).toHaveBeenCalledWith(['sign-in']);
+  }));
 });

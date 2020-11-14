@@ -35,14 +35,20 @@
             matInput
             type="password"
             autocomplete="off"
-            formControlName="confirmPassword"
+            formControlName="confirmPass"
             required
           />
         </mat-form-field>
+        <mat-error
+          class="custom-err"
+          *ngIf="
+            this.signUpFormGroup.controls.passGroup.invalid &&
+            (this.signUpFormGroup.controls.passGroup.touched ||
+              this.signUpFormGroup.controls.passGroup.dirty)
+          "
+          >{{ displayErrorMessage("pass") }}</mat-error
+        >
       </p>
-      <mat-error *ngIf="this.signUpFormGroup.controls.passGroup.invalid">{{
-        displayErrorMessage("pass")
-      }}</mat-error>
     </div>
 
     <button

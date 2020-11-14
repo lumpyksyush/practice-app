@@ -6,8 +6,6 @@ import {
 } from '@angular/common/http/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { of } from 'rxjs';
-
 import { Task } from './tasks/task.model';
 import { TasksService } from './tasks.service';
 

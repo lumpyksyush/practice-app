@@ -40,4 +40,16 @@ describe('RegisterService', () => {
     expect(req.request.method).toBe('POST');
     req.flush(mockUser);
   });
+
+  it('isLoggedIn() should return false if sessionStorage is empty', () => {
+    sessionStorage.clear();
+    const log = service.isLoggedIn;
+    expect(log).toBeFalse();
+  });
+
+  it('isLoggedIn() should return true if currentUser is set', () => {
+    sessionStorage.setItem('currentUser', 'vasyan');
+    const log = service.isLoggedIn;
+    expect(log).toBeTrue();
+  });
 });
