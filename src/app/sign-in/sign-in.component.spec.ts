@@ -6,7 +6,13 @@ import {
 } from '@angular/core/testing';
 import { Observable, of, Subject } from 'rxjs';
 
+import { By } from '@angular/platform-browser';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatInputModule } from '@angular/material/input';
+import { MatError } from '@angular/material/form-field';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -26,10 +32,19 @@ describe('SignInComponent', () => {
   let fixture: ComponentFixture<SignInComponent>;
   let authService: AuthService;
   let router: Router;
+  let email;
+  let matErrorEl: HTMLElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, FormsModule, RouterTestingModule],
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        RouterTestingModule,
+      ],
       declarations: [SignInComponent],
       providers: [{ provide: AuthService, useValue: authServiceMock }],
     }).compileComponents();
@@ -43,6 +58,8 @@ describe('SignInComponent', () => {
     component = fixture.componentInstance;
     component.ngOnInit();
     fixture.detectChanges();
+
+    email = component.signInFormGroup.controls.email;
   });
 
   it('should create', () => {
@@ -51,6 +68,17 @@ describe('SignInComponent', () => {
 
   it('should be invalid when form is empty', () => {
     expect(component.signInFormGroup.valid).toBeFalsy();
+  });
+
+  it('displayErrorMessage(field) should return an error message if email field is invalid', () => {
+    component.signInFormGroup.controls.email.markAsTouched();
+    email.setValue('test');
+    fixture.detectChanges();
+
+    matErrorEl = fixture.debugElement.query(By.directive(MatError))
+      .nativeElement;
+
+    expect(matErrorEl.innerHTML).toContain('This is not a valid email');
   });
 
   it('should navigate authenticated user to tasks page', fakeAsync(() => {

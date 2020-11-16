@@ -1,4 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 
 import {
   HttpClientTestingModule,
@@ -8,6 +13,7 @@ import {
 import { TasksListComponent } from './tasks-list.component';
 
 import { TasksService } from '../../tasks.service';
+import { Task } from '../task.model';
 
 const tasksServiceMock = {
   getTasks: () => {},
@@ -17,19 +23,23 @@ describe('TasksListComponent', () => {
   let component: TasksListComponent;
   let fixture: ComponentFixture<TasksListComponent>;
   let tasksService: TasksService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [TasksListComponent],
-      //providers: [{ providers: TasksService, useValue: tasksServiceMock }],
+      providers: [{ providers: TasksService, useValue: tasksServiceMock }],
     }).compileComponents();
   });
 
   beforeEach(() => {
+    httpMock = TestBed.inject(HttpTestingController);
     tasksService = TestBed.inject(TasksService);
     fixture = TestBed.createComponent(TasksListComponent);
     component = fixture.componentInstance;
+
+    component.ngOnInit();
     fixture.detectChanges();
   });
 

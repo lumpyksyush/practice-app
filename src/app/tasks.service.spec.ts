@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, TestBed } from '@angular/core/testing';
 
 import {
   HttpClientTestingModule,
@@ -8,6 +8,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { Task } from './tasks/task.model';
 import { TasksService } from './tasks.service';
+import { Observable, throwError } from 'rxjs';
 
 describe('TasksService', () => {
   const expectedTasks: Task[] = [
@@ -87,4 +88,21 @@ describe('TasksService', () => {
       statusText: 'Not Found',
     });
   });
+
+  it('handleError() should be called if request fails', fakeAsync(() => {
+    const handleErrorSpy = spyOn(service, 'handleError');
+
+    service.getTasks().subscribe(
+      () => {},
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    );
+
+    const req = httpMock.expectOne('http://localhost:3000/tasks');
+
+    req.error(new ErrorEvent('something went wrong'));
+
+    expect(handleErrorSpy).toHaveBeenCalled();
+  }));
 });

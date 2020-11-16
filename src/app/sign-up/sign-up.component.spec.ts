@@ -5,8 +5,6 @@ import {
   tick,
 } from '@angular/core/testing';
 
-import { Observable, Subject } from 'rxjs';
-
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -143,17 +141,10 @@ describe('SignUpComponent', () => {
     expect(matErrorDe).toBe(null);
   });
 
-  // it('should navigate new user to tasks page', fakeAsync(() => {
-  //   const mockObservable = new Subject();
-  //   spyOn(registerService, 'signUp').and.returnValue(
-  //     mockObservable as Observable<User>
-  //   );
-
-  //   const navigateSpy = spyOn(router, 'navigate');
-
+  // it('submitting form should trigger sign-up method in register service', fakeAsync(() => {
+  //   const signUpSpy = spyOn(registerService, 'signUp');
   //   component.onSubmit();
-  //   mockObservable.next();
   //   tick();
-  //   expect(navigateSpy).toHaveBeenCalledWith(['tasks']);
+  //   expect(signUpSpy).toHaveBeenCalled();
   // }));
 });

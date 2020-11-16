@@ -25,23 +25,8 @@ export class AuthService {
     return this.http
       .post<any>(`${this.baseUrl}/login`, { email, password }, this.httpOptions)
       .pipe(
-        map((res) => {
-          let user = new User();
-
-          if (res && res.accessToken) {
-            let decodedToken = helper.decodeToken(res.accessToken);
-
-            user.token = res.accessToken;
-            user.id = Number(decodedToken.sub);
-            user.email = decodedToken.email;
-
-            sessionStorage.setItem('currentUser', JSON.stringify(user));
-          }
-
-          console.log(`${user.email} has successfully signed in`);
-          return user;
-        }),
-        catchError(this.handleError<User>('sign in'))
+        map(this.authorizeUser),
+        catchError(this.handleError<User>())
       );
   }
 
@@ -52,7 +37,24 @@ export class AuthService {
 
   private baseUrl = 'http://localhost:3000';
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  authorizeUser(res: any) {
+    let user = new User();
+
+    if (res && res.accessToken) {
+      let decodedToken = helper.decodeToken(res.accessToken);
+
+      user.token = res.accessToken;
+      user.id = Number(decodedToken.sub);
+      user.email = decodedToken.email;
+
+      sessionStorage.setItem('currentUser', JSON.stringify(user));
+    }
+
+    console.log(`${user.email} has successfully signed in`);
+    return user;
+  }
+
+  handleError<T>(operation = 'operation', result?: T) {
     return (err: any): Observable<T> => {
       console.error(err);
       console.log(`${operation} failed`);

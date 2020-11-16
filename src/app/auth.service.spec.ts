@@ -10,6 +10,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { AuthService } from './auth.service';
 
+import { User } from './user.model';
+import { HttpErrorResponse } from '@angular/common/http';
+
+const existingUser = {
+  email: 'kartman@yandex.ru',
+  password: 'kartman99',
+};
+
 describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
@@ -31,11 +39,6 @@ describe('AuthService', () => {
   });
 
   it('should be a POST request', () => {
-    const existingUser = {
-      email: 'kartman@yandex.ru',
-      password: 'kartman99',
-    };
-
     service
       .signIn(existingUser.email, existingUser.password)
       .subscribe((res) => expect(res.email).toEqual('kartman@yandex.ru'));
@@ -57,5 +60,30 @@ describe('AuthService', () => {
     service.signOut();
     tick();
     expect(navigateSpy).toHaveBeenCalledWith(['sign-in']);
+  }));
+
+  it('authorizeUser(res) should return an authorized user', () => {
+    const user = service.authorizeUser(
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImthcnRtYW5AeWFuZGV4LnJ1IiwiaWF0IjoxNjA1NTIwODA5LCJleHAiOjE2MDU1MjQ0MDksInN1YiI6IjYifQ.jEdTQUWGzIqVzRQlZsvVGMMds7kp7P6Jd5ztjaoQY3Y'
+    );
+
+    expect(user).toBeTruthy();
+    expect(user).toBeInstanceOf(User);
+  });
+
+  it('handleError() should be called if request fails', fakeAsync(() => {
+    const handleErrorSpy = spyOn(service, 'handleError');
+
+    service.signIn('unknown@mail.ru', '123456789').subscribe(
+      () => {},
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    );
+
+    const req = httpMock.expectOne('http://localhost:3000/login');
+
+    req.error(new ErrorEvent('something went wrong'));
+    expect(handleErrorSpy).toHaveBeenCalled();
   }));
 });

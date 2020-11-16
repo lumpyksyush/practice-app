@@ -44,8 +44,10 @@ describe('HeaderComponent', () => {
     expect(titleEl.textContent).toContain('Tasks List');
   });
 
-  it('clicking sign-out button should trigger onSignOut() method', fakeAsync(() => {
-    const signOutSpy = spyOn(component, 'onSignOut');
-    signOutSpy();
+  it('clicking sign-out button should trigger signOut() method in auth service', fakeAsync(() => {
+    const signOutSpy = spyOn(authService, 'signOut');
+    component.onSignOut();
+    tick();
+    expect(signOutSpy).toHaveBeenCalled();
   }));
 });
