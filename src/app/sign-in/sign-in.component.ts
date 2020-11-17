@@ -29,7 +29,7 @@ export class SignInComponent implements OnInit {
         this.signInFormGroup.controls.email.value,
         this.signInFormGroup.controls.password.value
       )
-      .subscribe((_) => this.router.navigate(['tasks']));
+      .subscribe((_) => this.router.navigate(['tasks-list']));
   }
 
   displayErrorMessage() {

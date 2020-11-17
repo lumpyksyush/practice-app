@@ -2,27 +2,33 @@
   "tasks": [
     {
       "id": 1,
-      "name": "Meet Alice at 3.00 PM"
+      "name": "Meet Alice at 3.00 PM",
+      "isCompleted": false
     },
     {
       "id": 2,
-      "name": "Do all the household chores"
+      "name": "Do all the household chores",
+      "isCompleted": false
     },
     {
       "id": 3,
-      "name": "Cook some diet pancakes"
+      "name": "Cook some diet pancakes",
+      "isCompleted": false
     },
     {
       "id": 4,
-      "name": "Finish reading Angular documentation"
+      "name": "Finish reading Angular documentation",
+      "isCompleted": false
     },
     {
       "id": 5,
-      "name": "Read JJBA manga"
+      "name": "Read JJBA manga",
+      "isCompleted": false
     },
     {
       "id": 6,
-      "name": "Play Hades"
+      "name": "Play Hades",
+      "isCompleted": false
     }
   ],
   "users": [
@@ -60,6 +66,11 @@
       "email": "myEmail@mail.ru",
       "password": "$2a$10$Gn2cCIG5QwkTLPZpFrUUg.tRXPaNEqhvjZNzMfZmRzuXWdjnx9ABe",
       "id": 7
+    },
+    {
+      "email": "myEmail11@mail.ru",
+      "password": "$2a$10$R7qV4Stvowp5.TG8mIGgTu/YmvsJzeHQ82/PC7FNIum7OVTdvtNoS",
+      "id": 8
     }
   ]
 }

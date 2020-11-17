@@ -34,7 +34,7 @@ export class SignUpComponent implements OnInit {
         this.signUpFormGroup.controls.password.value
       )
       .subscribe((_) => {
-        this.router.navigate(['tasks']);
+        this.router.navigate(['tasks-list']);
       });
   }
 
