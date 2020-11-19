@@ -2,10 +2,38 @@
 
 <div class="tasks">
   <div class="tasks__container">
-    <mat-list>
+    <!-- <mat-list>
       <mat-list-item *ngFor="let task of tasks">
         Task {{ task.id }}: {{ task.name }}
       </mat-list-item>
-    </mat-list>
+    </mat-list> -->
+    <button mat-raised-button class="create-task-btn">Create new task</button>
+    <div class="mat-elevation-z8">
+      <mat-table [dataSource]="tasksSource">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+          <mat-cell *matCellDef="let task">{{ task.id }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let task">{{ task.name }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="isCompleted">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let task"
+            ><button mat-flat-button color="accent">
+              Add to completed
+            </button></mat-cell
+          >
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let rowData; columns: displayedColumns"></mat-row>
+      </mat-table>
+
+      <mat-paginator [length]="6" [pageSize]="3"> </mat-paginator>
+    </div>
   </div>
 </div>

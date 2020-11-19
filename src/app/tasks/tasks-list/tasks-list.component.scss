@@ -10,8 +10,10 @@
   align-items: center;
 
   &__container {
-    background-color: white;
-    width: 400px;
-    padding: 15px 0;
+    width: 45%;
+
+    .create-task-btn {
+      margin-bottom: 10px;
+    }
   }
 }
