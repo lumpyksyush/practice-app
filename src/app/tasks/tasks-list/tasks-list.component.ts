@@ -2,11 +2,16 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
+import {
+  MatDialog,
+  MatDialogConfig,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 
 import { Task } from '../task.model';
 import { TasksService } from '../../tasks.service';
 import { TasksListDataSource } from './tasks-list-data-source';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks-list',
@@ -14,6 +19,7 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./tasks-list.component.scss'],
 })
 export class TasksListComponent implements OnInit, AfterViewInit {
+  taskName: string = '';
   tasks: Task[];
   tasksSource: TasksListDataSource;
 
@@ -23,7 +29,8 @@ export class TasksListComponent implements OnInit, AfterViewInit {
 
   constructor(
     private tasksService: TasksService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +49,27 @@ export class TasksListComponent implements OnInit, AfterViewInit {
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
+  }
+
+  openDialog() {
+    let dialogConfig = new MatDialogConfig();
+
+    dialogConfig.autoFocus = true;
+
+    dialogConfig = {
+      height: '200px',
+      width: '400px',
+      data: {
+        name: this.taskName,
+      },
+    };
+
+    const dialogRef = this.dialog.open(CreateTaskDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe((data) => {
+      this.taskName = data;
+      console.log(this.taskName)
+    });
   }
 
   // getTasks(): void {

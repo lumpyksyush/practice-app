@@ -7,7 +7,9 @@
         Task {{ task.id }}: {{ task.name }}
       </mat-list-item>
     </mat-list> -->
-    <button mat-raised-button class="create-task-btn">Create new task</button>
+    <button mat-raised-button class="create-task-btn" (click)="openDialog()">
+      Create new task
+    </button>
     <div class="mat-elevation-z8">
       <mat-table [dataSource]="tasksSource">
         <ng-container matColumnDef="id">
