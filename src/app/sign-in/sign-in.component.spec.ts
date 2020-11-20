@@ -8,11 +8,12 @@ import { Observable, of, Subject } from 'rxjs';
 
 import { By } from '@angular/platform-browser';
 
+import { mockComponent } from '../../helpers/mock-component';
+
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
-import { MatError } from '@angular/material/form-field';
 
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -27,6 +28,10 @@ const authServiceMock = {
   signIn: () => {},
 };
 
+const formGrMock = mockComponent({ selector: '[FormGroupDirective]' });
+const formCtrlMock = mockComponent({ selector: '[FormControlDirective]' });
+const matErrorMock = mockComponent({ selector: '[MatError]' });
+
 describe('SignInComponent', () => {
   let component: SignInComponent;
   let fixture: ComponentFixture<SignInComponent>;
@@ -37,15 +42,8 @@ describe('SignInComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ReactiveFormsModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        MatInputModule,
-        MatFormFieldModule,
-        RouterTestingModule,
-      ],
-      declarations: [SignInComponent],
+      imports: [RouterTestingModule],
+      declarations: [SignInComponent, formCtrlMock, formGrMock, matErrorMock],
       providers: [{ provide: AuthService, useValue: authServiceMock }],
     }).compileComponents();
   });
@@ -75,8 +73,7 @@ describe('SignInComponent', () => {
     email.setValue('test');
     fixture.detectChanges();
 
-    matErrorEl = fixture.debugElement.query(By.directive(MatError))
-      .nativeElement;
+    matErrorEl = fixture.debugElement.query(By.css('mat-error')).nativeElement;
 
     expect(matErrorEl.innerHTML).toContain('This is not a valid email');
   });

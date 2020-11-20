@@ -7,14 +7,12 @@ import {
 
 import { Location } from '@angular/common';
 
-import { Router, RouterLinkWithHref } from '@angular/router';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { routes } from './app-routing.module';
 
-import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -24,8 +22,11 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AppModule, RouterTestingModule.withRoutes(routes)],
-      declarations: [AppComponent, SignInComponent, SignUpComponent],
+      imports: [
+        RouterTestingModule.withRoutes(routes),
+        HttpClientTestingModule,
+      ],
+      declarations: [AppComponent],
     }).compileComponents();
 
     router = TestBed.inject(Router);

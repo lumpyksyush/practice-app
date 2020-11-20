@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClient, HttpHandler } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { AccessTasksGuard } from './access-tasks.guard';
 
@@ -7,7 +7,7 @@ describe('AccessTasksGuard', () => {
   let guard: AccessTasksGuard;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [HttpClient, HttpHandler] });
+    TestBed.configureTestingModule({ imports: [HttpClientTestingModule] });
     guard = TestBed.inject(AccessTasksGuard);
   });
 
