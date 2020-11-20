@@ -7,20 +7,21 @@ import { TasksComponent } from './tasks/tasks.component';
 
 import { AccessTasksGuard } from './access-tasks.guard';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'sign-in',
     component: SignInComponent,
   },
   {
+    path: '',
+    redirectTo: 'sign-in',
+    pathMatch: 'full',
+  },
+  {
     path: 'sign-up',
     component: SignUpComponent,
   },
-  {
-    path: '',
-    redirectTo: '/sign-in',
-    pathMatch: 'full',
-  },
+
   {
     path: 'tasks',
     component: TasksComponent,

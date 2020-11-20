@@ -22,7 +22,7 @@ export class TasksService {
       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  handleError<T>(operation = 'operation', result?: T) {
     return (err: any): Observable<T> => {
       console.error(err);
       console.log(`${operation} failed`);

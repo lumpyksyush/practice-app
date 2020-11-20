@@ -1,35 +1,61 @@
-import { TestBed, async } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  tick,
+  fakeAsync,
+} from '@angular/core/testing';
+
+import { Location } from '@angular/common';
+
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { routes } from './app-routing.module';
+
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let router: Router;
+  let location: Location;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule.withRoutes(routes),
+        HttpClientTestingModule,
       ],
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
     }).compileComponents();
-  }));
+
+    router = TestBed.inject(Router);
+    location = TestBed.inject(Location);
+    fixture = TestBed.createComponent(AppComponent);
+
+    component = fixture.componentInstance;
+    component.ngOnInit();
+    fixture.detectChanges();
+    router.initialNavigation();
+  });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'practice-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('practice-app');
+    expect(component.title).toEqual('practice-app');
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('practice-app app is running!');
-  });
+  it('should navigate to sign-in by default', fakeAsync(() => {
+    router.navigate(['']);
+    tick();
+    expect(location.path()).toBe('/sign-in');
+  }));
+
+  it(`navigate to 'sign-up' takes you to sign-up page`, fakeAsync(() => {
+    router.navigate(['sign-up']);
+    tick();
+    expect(location.path()).toBe('/sign-up');
+  }));
 });
