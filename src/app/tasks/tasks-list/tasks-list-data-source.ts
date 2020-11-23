@@ -1,7 +1,7 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 import { TasksService } from '../../tasks.service';
 import { Task } from '../task.model';

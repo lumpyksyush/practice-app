@@ -10,10 +10,24 @@
   align-items: center;
 
   &__container {
-    width: 45%;
+    width: 600px;
 
     .create-task-btn {
       margin-bottom: 10px;
     }
   }
+}
+
+/* Columns' styles */
+.mat-column-id {
+  max-width: 64px;
+}
+
+.mat-column-isCompleted {
+  justify-content: center;
+}
+
+.mat-column-delete {
+  justify-content: center;
+  max-width: 80px;
 }
