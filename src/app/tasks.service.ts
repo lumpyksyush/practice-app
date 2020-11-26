@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { Observable, of, Subscription, interval } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, filter, map, tap } from 'rxjs/operators';
 
 import { Task } from './tasks/task.model';
 
@@ -22,6 +22,15 @@ export class TasksService {
       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
   }
 
+  getCompletedTasks(): Observable<Task[]> {
+    return this.http
+      .get<Task[]>(this.tasksUrl, { observe: 'response' })
+      .pipe(
+        map((res) => res.body.filter((task) => task.isCompleted === true)),
+        catchError(this.handleError<Task[]>('getTasks', []))
+      );
+  }
+
   getTasksWithPagination(pageIndex = 0, pageSize = 3): Observable<Task[]> {
     return this.http
       .get<Task[]>(`${this.tasksUrl}?`, {
@@ -32,6 +41,22 @@ export class TasksService {
       .pipe(catchError(this.handleError<Task[]>('getTasks', [])));
   }
 
+  getCompletedTasksWithPagination(
+    pageIndex = 0,
+    pageSize = 3
+  ): Observable<Task[]> {
+    return this.http
+      .get<Task[]>(`${this.tasksUrl}?`, {
+        params: new HttpParams()
+          .set('_start', (3 * pageIndex).toString())
+          .set('_end', (pageSize * (pageIndex + 1)).toString()),
+      })
+      .pipe(
+        map((res) => res.filter((task) => task.isCompleted === true)),
+        catchError(this.handleError<Task[]>('getCompletedTasks'))
+      );
+  }
+
   createTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.tasksUrl, task, this.httpOptions).pipe(
       tap((res) => console.log(res)),
@@ -39,7 +64,13 @@ export class TasksService {
     );
   }
 
-  updateTask(task: Task): Observable<any> {
+  completeTask(task: Task): Observable<any> {
+    return this.http
+      .put<Task>(`${this.tasksUrl}/${task.id}`, task, this.httpOptions)
+      .pipe(catchError(this.handleError<any>('updateTask')));
+  }
+
+  removeFromCompleted(task: Task): Observable<any> {
     return this.http
       .put<Task>(`${this.tasksUrl}/${task.id}`, task, this.httpOptions)
       .pipe(catchError(this.handleError<any>('updateTask')));

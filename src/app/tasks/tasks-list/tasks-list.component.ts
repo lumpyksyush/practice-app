@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnInit,
-  ViewChild,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
@@ -14,7 +8,8 @@ import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dial
 import { Task } from '../task.model';
 import { TasksService } from '../../tasks.service';
 import { TasksListDataSource } from './tasks-list-data-source';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatTable } from '@angular/material/table';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks-list',
@@ -51,6 +46,7 @@ export class TasksListComponent implements OnInit, AfterViewInit {
 
   getTasks(): void {
     this.tasksService.getTasks().subscribe((res) => {
+      this.tasks = res.body;
       this.tasksLength = res.body.length;
     });
   }
@@ -81,28 +77,31 @@ export class TasksListComponent implements OnInit, AfterViewInit {
       if (data) {
         this.tasksService
           .createTask({
-            id: this.tasksLength + 1,
+            id: this.tasks.length + 1,
             name: data,
             isCompleted: false,
           })
-          .subscribe();
-        this.table.renderRows();
+          .subscribe(() => {
+            this.loadTasksListPage();
+          });
       }
     });
   }
 
-  complete(task: Task) {
+  markAsCompleted(task: Task) {
     this.tasksService
-      .updateTask({
+      .completeTask({
         id: task.id,
         name: task.name,
         isCompleted: true,
         isCompletedFrom: Date(),
       })
-      .subscribe();
+      .subscribe(() => this.loadTasksListPage());
   }
 
   delete(task: Task) {
-    this.tasksService.deleteTask(task).subscribe();
+    this.tasksService
+      .deleteTask(task)
+      .subscribe(() => this.loadTasksListPage());
   }
 }

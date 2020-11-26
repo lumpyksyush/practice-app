@@ -23,14 +23,6 @@ const routes: Routes = [
     canActivate: [AccessTasksGuard],
   },
   {
-    path: 'completed-tasks',
-    loadChildren: () =>
-      import('./tasks/completed-tasks/completed-tasks.module').then(
-        (m) => m.CompletedTasksModule
-      ),
-    canActivate: [AccessTasksGuard],
-  },
-  {
     path: '',
     redirectTo: '/sign-in',
     pathMatch: 'full',

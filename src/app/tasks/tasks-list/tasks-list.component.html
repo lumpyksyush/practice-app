@@ -23,7 +23,13 @@
         <ng-container matColumnDef="isCompleted">
           <mat-header-cell *matHeaderCellDef></mat-header-cell>
           <mat-cell *matCellDef="let task"
-            ><button mat-flat-button color="accent" (click)="complete(task)">
+            ><button
+              mat-flat-button
+              color="accent"
+              (click)="markAsCompleted(task)"
+              [disabled]="task.isCompleted"
+            >
+              <mat-icon>add</mat-icon>
               Add to completed
             </button>
           </mat-cell>

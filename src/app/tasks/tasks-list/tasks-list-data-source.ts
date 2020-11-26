@@ -1,4 +1,4 @@
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
+import { DataSource } from '@angular/cdk/collections';
 
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
@@ -9,12 +9,12 @@ import { Task } from '../task.model';
 export class TasksListDataSource implements DataSource<Task> {
   constructor(private tasksService: TasksService) {}
 
-  connect(collectionViewer: CollectionViewer): Observable<Task[]> {
-    return this.tasksSubject.asObservable();
+  connect(): Observable<Task[]> {
+    return this.tasksSubject$.asObservable();
   }
 
-  disconnect(collectionViewer: CollectionViewer): void {
-    this.tasksSubject.complete();
+  disconnect(): void {
+    this.tasksSubject$.complete();
   }
 
   loadTasksList(pageIndex: number, pageSize: number) {
@@ -24,8 +24,18 @@ export class TasksListDataSource implements DataSource<Task> {
         catchError(() => of([])),
         finalize(() => console.log('tasks fetched'))
       )
-      .subscribe((tasks) => this.tasksSubject.next(tasks));
+      .subscribe((tasks) => this.tasksSubject$.next(tasks));
   }
 
-  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  loadCompletedTasksList(pageIndex: number, pageSize: number) {
+    this.tasksService
+      .getCompletedTasksWithPagination(pageIndex, pageSize)
+      .pipe(
+        catchError(() => of([])),
+        finalize(() => console.log('completed tasks fetched'))
+      )
+      .subscribe((tasks) => this.tasksSubject$.next(tasks));
+  }
+
+  private tasksSubject$ = new BehaviorSubject<Task[]>([]);
 }

@@ -1,1 +1,50 @@
-<p>completed-tasks works!</p>
+<app-header></app-header>
+
+<div class="tasks">
+  <div class="tasks__container">
+    <div class="mat-elevation-z8">
+      <mat-table [dataSource]="tasksSource">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+          <mat-cell *matCellDef="let task">{{ task.id }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+          <mat-cell *matCellDef="let task">
+            <span>{{ task.name }}</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="isCompletedFrom">
+          <mat-header-cell *matHeaderCellDef
+            >Date of completion</mat-header-cell
+          >
+          <mat-cell *matCellDef="let task">
+            <span>{{ task.isCompletedFrom | date: "mediumDate" }}</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="remove">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let task"
+            ><button
+              mat-flat-button
+              color="accent"
+              (click)="markAsIncomplete(task)"
+              [disabled]="!task.isCompleted"
+            >
+              <mat-icon>delete</mat-icon>
+              Remove from completed
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let rowData; columns: displayedColumns"></mat-row>
+      </mat-table>
+
+      <mat-paginator [length]="tasksLength" [pageSize]="3"> </mat-paginator>
+    </div>
+  </div>
+</div>
