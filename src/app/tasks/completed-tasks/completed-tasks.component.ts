@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { MatPaginator } from '@angular/material/paginator';
 
-import { Task } from '../task.model';
+import { Task } from '../../types/task.model';
 import { TasksService } from '../../tasks.service';
 import { TasksListDataSource } from '../tasks-list/tasks-list-data-source';
 import { MatTable } from '@angular/material/table';
@@ -18,7 +18,7 @@ export class CompletedTasksComponent implements OnInit, AfterViewInit {
   tasksLength: number;
   tasksSource: TasksListDataSource;
 
-  displayedColumns = ['id', 'name', 'isCompletedFrom', 'remove'];
+  displayedColumns = ['id', 'name', 'isCompletedFrom', 'isCompleted'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatTable) table: MatTable<any>;
@@ -39,21 +39,21 @@ export class CompletedTasksComponent implements OnInit, AfterViewInit {
     this.paginator.page.subscribe(() => this.loadTasksListPage());
   }
 
-  getCompletedTasks() {
+  getCompletedTasks(): void {
     this.tasksService.getCompletedTasks().subscribe((res) => {
       this.tasks = res;
       this.tasksLength = res.length;
     });
   }
 
-  loadTasksListPage() {
+  loadTasksListPage(): void {
     this.tasksSource.loadCompletedTasksList(
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
   }
 
-  markAsIncomplete(task: Task) {
+  markAsIncomplete(task: Task): void {
     this.tasksService
       .completeTask({
         id: task.id,

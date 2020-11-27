@@ -5,11 +5,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CreateTaskDialogComponent } from './create-task-dialog/create-task-dialog.component';
 
-import { Task } from '../task.model';
+import { Task } from '../../types/task.model';
 import { TasksService } from '../../tasks.service';
 import { TasksListDataSource } from './tasks-list-data-source';
 import { MatTable } from '@angular/material/table';
-import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks-list',
@@ -40,7 +39,7 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     this.tasksSource.loadTasksList(0, 3);
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.paginator.page.subscribe(() => this.loadTasksListPage());
   }
 
@@ -51,14 +50,14 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  loadTasksListPage() {
+  loadTasksListPage(): void {
     this.tasksSource.loadTasksList(
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
   }
 
-  openDialog() {
+  openDialog(): void {
     let dialogConfig = new MatDialogConfig();
 
     dialogConfig.autoFocus = true;
@@ -88,7 +87,7 @@ export class TasksListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  markAsCompleted(task: Task) {
+  markAsCompleted(task: Task): void {
     this.tasksService
       .completeTask({
         id: task.id,
@@ -99,7 +98,7 @@ export class TasksListComponent implements OnInit, AfterViewInit {
       .subscribe(() => this.loadTasksListPage());
   }
 
-  delete(task: Task) {
+  delete(task: Task): void {
     this.tasksService
       .deleteTask(task)
       .subscribe(() => this.loadTasksListPage());

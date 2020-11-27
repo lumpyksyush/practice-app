@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of, Subscription, interval } from 'rxjs';
 import { catchError, filter, map, tap } from 'rxjs/operators';
 
-import { Task } from './tasks/task.model';
+import { Task } from './types/task.model';
 
 @Injectable({
   providedIn: 'root',

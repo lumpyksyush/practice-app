@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
 import { TasksService } from '../../tasks.service';
-import { Task } from '../task.model';
+import { Task } from '../../types/task.model';
 
 export class TasksListDataSource implements DataSource<Task> {
   constructor(private tasksService: TasksService) {}
